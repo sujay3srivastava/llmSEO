@@ -10,7 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.1.9/recharts.min.js"></script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -18,6 +17,7 @@
     .chart-container {
       height: 250px;
       width: 100%;
+      position: relative;
     }
     /* Custom scrollbar styling */
     ::-webkit-scrollbar {
@@ -37,13 +37,49 @@
     html {
       scroll-behavior: smooth;
     }
-    /* Animation for chart loading */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* SVG Chart Styles */
+    .chart-title {
+      font-size: 16px;
+      font-weight: 500;
+      text-anchor: middle;
     }
-    .fade-in {
-      animation: fadeIn 0.5s ease-in-out;
+    .axis-label {
+      font-size: 12px;
+      fill: #6b7280;
+    }
+    .chart-bar {
+      transition: opacity 0.3s;
+    }
+    .chart-bar:hover {
+      opacity: 0.8;
+    }
+    .chart-line {
+      fill: none;
+      stroke-width: 2;
+    }
+    .chart-area {
+      opacity: 0.3;
+    }
+    .chart-label {
+      font-size: 11px;
+      fill: #4b5563;
+    }
+    .chart-legend-item {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 16px;
+      font-size: 12px;
+    }
+    .chart-legend-color {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 4px;
+      border-radius: 2px;
+    }
+    .chart-legend {
+      text-align: center;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -216,11 +252,79 @@
       </div>
 
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <!-- Chart placeholders - Using images instead of interactive charts for the static version -->
+        <!-- Static SVG Charts -->
         <div class="bg-white rounded-lg shadow-lg p-6">
           <h3 class="text-lg font-medium text-gray-900 mb-4">Research Efficiency Over Time</h3>
-          <div class="h-64 flex items-center justify-center bg-gray-100 rounded">
-            <img src="https://via.placeholder.com/600x300?text=Line+Chart:+Research+Efficiency" alt="Research Efficiency Chart" class="max-w-full max-h-full">
+          <div class="chart-container">
+            <svg width="100%" height="100%" viewBox="0 0 500 250" preserveAspectRatio="xMidYMid meet">
+              <!-- X and Y Axes -->
+              <line x1="50" y1="200" x2="450" y2="200" stroke="#e5e7eb" stroke-width="1" />
+              <line x1="50" y1="40" x2="50" y2="200" stroke="#e5e7eb" stroke-width="1" />
+              
+              <!-- X-axis labels (months) -->
+              <text x="80" y="220" class="axis-label" text-anchor="middle">Jan</text>
+              <text x="130" y="220" class="axis-label" text-anchor="middle">Feb</text>
+              <text x="180" y="220" class="axis-label" text-anchor="middle">Mar</text>
+              <text x="230" y="220" class="axis-label" text-anchor="middle">Apr</text>
+              <text x="280" y="220" class="axis-label" text-anchor="middle">May</text>
+              <text x="330" y="220" class="axis-label" text-anchor="middle">Jun</text>
+              <text x="380" y="220" class="axis-label" text-anchor="middle">Jul</text>
+              <text x="430" y="220" class="axis-label" text-anchor="middle">Aug</text>
+              
+              <!-- Y-axis labels -->
+              <text x="40" y="200" class="axis-label" text-anchor="end">0</text>
+              <text x="40" y="160" class="axis-label" text-anchor="end">25</text>
+              <text x="40" y="120" class="axis-label" text-anchor="end">50</text>
+              <text x="40" y="80" class="axis-label" text-anchor="end">75</text>
+              <text x="40" y="40" class="axis-label" text-anchor="end">100</text>
+              
+              <!-- Grid lines -->
+              <line x1="50" y1="160" x2="450" y2="160" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />
+              <line x1="50" y1="120" x2="450" y2="120" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />
+              <line x1="50" y1="80" x2="450" y2="80" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />
+              <line x1="50" y1="40" x2="450" y2="40" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />
+              
+              <!-- Traditional methods line -->
+              <path d="M80,184 L130,182.4 L180,186.4 L230,181.6 L280,180 L330,180.8 L380,179.2 L430,178.4" 
+                    class="chart-line" stroke="#8884d8" />
+              
+              <!-- GEO platform line -->
+              <path d="M80,164 L130,152 L180,142.4 L230,120 L280,94 L330,84 L380,74 L430,64" 
+                    class="chart-line" stroke="#4f46e5" stroke-width="2.5" />
+              
+              <!-- Data points: Traditional -->
+              <circle cx="80" cy="184" r="4" fill="#8884d8" />
+              <circle cx="130" cy="182.4" r="4" fill="#8884d8" />
+              <circle cx="180" cy="186.4" r="4" fill="#8884d8" />
+              <circle cx="230" cy="181.6" r="4" fill="#8884d8" />
+              <circle cx="280" cy="180" r="4" fill="#8884d8" />
+              <circle cx="330" cy="180.8" r="4" fill="#8884d8" />
+              <circle cx="380" cy="179.2" r="4" fill="#8884d8" />
+              <circle cx="430" cy="178.4" r="4" fill="#8884d8" />
+              
+              <!-- Data points: GEO -->
+              <circle cx="80" cy="164" r="4" fill="#4f46e5" />
+              <circle cx="130" cy="152" r="4" fill="#4f46e5" />
+              <circle cx="180" cy="142.4" r="4" fill="#4f46e5" />
+              <circle cx="230" cy="120" r="4" fill="#4f46e5" />
+              <circle cx="280" cy="94" r="4" fill="#4f46e5" />
+              <circle cx="330" cy="84" r="4" fill="#4f46e5" />
+              <circle cx="380" cy="74" r="4" fill="#4f46e5" />
+              <circle cx="430" cy="64" r="4" fill="#4f46e5" />
+              
+              <!-- Chart title -->
+              <text x="40" y="25" class="chart-title" text-anchor="start">Efficiency Score</text>
+            </svg>
+            <div class="chart-legend">
+              <div class="chart-legend-item">
+                <span class="chart-legend-color" style="background-color: #8884d8;"></span>
+                <span>Traditional Methods</span>
+              </div>
+              <div class="chart-legend-item">
+                <span class="chart-legend-color" style="background-color: #4f46e5;"></span>
+                <span>GEO Platform</span>
+              </div>
+            </div>
           </div>
           <p class="mt-4 text-sm text-gray-500">
             Companies using GEO see a 2-3x increase in research efficiency compared to traditional methods.
@@ -229,8 +333,66 @@
 
         <div class="bg-white rounded-lg shadow-lg p-6">
           <h3 class="text-lg font-medium text-gray-900 mb-4">Insight Quality Metrics</h3>
-          <div class="h-64 flex items-center justify-center bg-gray-100 rounded">
-            <img src="https://via.placeholder.com/600x300?text=Bar+Chart:+Insight+Quality" alt="Insight Quality Chart" class="max-w-full max-h-full">
+          <div class="chart-container">
+            <svg width="100%" height="100%" viewBox="0 0 500 250" preserveAspectRatio="xMidYMid meet">
+              <!-- Horizontal axis -->
+              <line x1="150" y1="210" x2="450" y2="210" stroke="#e5e7eb" stroke-width="1" />
+              
+              <!-- Category labels -->
+              <text x="140" y="40" class="axis-label" text-anchor="end">Relevance</text>
+              <text x="140" y="80" class="axis-label" text-anchor="end">Accuracy</text>
+              <text x="140" y="120" class="axis-label" text-anchor="end">Depth</text>
+              <text x="140" y="160" class="axis-label" text-anchor="end">Actionability</text>
+              <text x="140" y="200" class="axis-label" text-anchor="end">Innovation</text>
+              
+              <!-- Scale markers -->
+              <text x="150" y="230" class="axis-label" text-anchor="middle">0</text>
+              <text x="250" y="230" class="axis-label" text-anchor="middle">50</text>
+              <text x="350" y="230" class="axis-label" text-anchor="middle">75</text>
+              <text x="450" y="230" class="axis-label" text-anchor="middle">100</text>
+              
+              <!-- Grid lines -->
+              <line x1="150" y1="30" x2="150" y2="210" stroke="#e5e7eb" stroke-width="1" />
+              <line x1="250" y1="30" x2="250" y2="210" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />
+              <line x1="350" y1="30" x2="350" y2="210" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />
+              <line x1="450" y1="30" x2="450" y2="210" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />
+              
+              <!-- Traditional methods bars -->
+              <rect x="150" y="25" width="195" height="20" fill="#8884d8" class="chart-bar" />
+              <rect x="150" y="65" width="210" height="20" fill="#8884d8" class="chart-bar" />
+              <rect x="150" y="105" width="180" height="20" fill="#8884d8" class="chart-bar" />
+              <rect x="150" y="145" width="165" height="20" fill="#8884d8" class="chart-bar" />
+              <rect x="150" y="185" width="120" height="20" fill="#8884d8" class="chart-bar" />
+              
+              <!-- GEO platform bars -->
+              <rect x="150" y="45" width="276" height="20" fill="#4f46e5" class="chart-bar" />
+              <rect x="150" y="85" width="285" height="20" fill="#4f46e5" class="chart-bar" />
+              <rect x="150" y="125" width="264" height="20" fill="#4f46e5" class="chart-bar" />
+              <rect x="150" y="165" width="270" height="20" fill="#4f46e5" class="chart-bar" />
+              <rect x="150" y="205" width="255" height="20" fill="#4f46e5" class="chart-bar" />
+              
+              <!-- Value labels -->
+              <text x="350" y="40" class="chart-label">65%</text>
+              <text x="440" y="60" class="chart-label">92%</text>
+              <text x="365" y="80" class="chart-label">70%</text>
+              <text x="440" y="100" class="chart-label">95%</text>
+              <text x="335" y="120" class="chart-label">60%</text>
+              <text x="425" y="140" class="chart-label">88%</text>
+              <text x="320" y="160" class="chart-label">55%</text>
+              <text x="425" y="180" class="chart-label">90%</text>
+              <text x="275" y="200" class="chart-label">40%</text>
+              <text x="410" y="220" class="chart-label">85%</text>
+            </svg>
+            <div class="chart-legend">
+              <div class="chart-legend-item">
+                <span class="chart-legend-color" style="background-color: #8884d8;"></span>
+                <span>Traditional Methods</span>
+              </div>
+              <div class="chart-legend-item">
+                <span class="chart-legend-color" style="background-color: #4f46e5;"></span>
+                <span>GEO Platform</span>
+              </div>
+            </div>
           </div>
           <p class="mt-4 text-sm text-gray-500">
             GEO consistently delivers high-quality insights across all key performance indicators.
@@ -239,8 +401,29 @@
 
         <div class="bg-white rounded-lg shadow-lg p-6">
           <h3 class="text-lg font-medium text-gray-900 mb-4">Average Time to Insight (minutes)</h3>
-          <div class="h-64 flex items-center justify-center bg-gray-100 rounded">
-            <img src="https://via.placeholder.com/600x300?text=Pie+Chart:+Time+to+Insight" alt="Time to Insight Chart" class="max-w-full max-h-full">
+          <div class="chart-container">
+            <svg width="100%" height="100%" viewBox="0 0 500 250" preserveAspectRatio="xMidYMid meet">
+              <!-- Pie chart -->
+              <g transform="translate(250, 125)">
+                <!-- Traditional Methods: 120 minutes (72.7%) -->
+                <path d="M0,0 L0,-100 A100,100 0 1,1 -95.1,-30.9 Z" fill="#8884d8" class="chart-bar" />
+                
+                <!-- GEO: 45 minutes (27.3%) -->
+                <path d="M0,0 L-95.1,-30.9 A100,100 0 0,1 0,-100 Z" fill="#4f46e5" class="chart-bar" />
+                
+                <!-- Labels with lines -->
+                <line x1="50" y1="-86.6" x2="120" y2="-100" stroke="#666" stroke-width="1" />
+                <text x="130" y="-95" class="chart-label">Traditional: 120 min</text>
+                
+                <line x1="-47.5" y1="-15.4" x2="-120" y2="-20" stroke="#666" stroke-width="1" />
+                <text x="-150" y="-15" class="chart-label" text-anchor="end">GEO: 45 min</text>
+              </g>
+              
+              <!-- Time savings callout -->
+              <text x="250" y="225" text-anchor="middle" class="chart-label" fill="#4f46e5" font-weight="bold">
+                62.5% Reduction in Time to Insight
+              </text>
+            </svg>
           </div>
           <p class="mt-4 text-sm text-gray-500">
             GEO reduces the average time to extract meaningful insights by 62.5%.
@@ -249,8 +432,60 @@
 
         <div class="bg-white rounded-lg shadow-lg p-6">
           <h3 class="text-lg font-medium text-gray-900 mb-4">Cumulative Research Value</h3>
-          <div class="h-64 flex items-center justify-center bg-gray-100 rounded">
-            <img src="https://via.placeholder.com/600x300?text=Area+Chart:+Research+Value" alt="Research Value Chart" class="max-w-full max-h-full">
+          <div class="chart-container">
+            <svg width="100%" height="100%" viewBox="0 0 500 250" preserveAspectRatio="xMidYMid meet">
+              <!-- Axes -->
+              <line x1="50" y1="200" x2="450" y2="200" stroke="#e5e7eb" stroke-width="1" />
+              <line x1="50" y1="40" x2="50" y2="200" stroke="#e5e7eb" stroke-width="1" />
+              
+              <!-- X-axis labels (months) -->
+              <text x="80" y="220" class="axis-label" text-anchor="middle">Jan</text>
+              <text x="130" y="220" class="axis-label" text-anchor="middle">Feb</text>
+              <text x="180" y="220" class="axis-label" text-anchor="middle">Mar</text>
+              <text x="230" y="220" class="axis-label" text-anchor="middle">Apr</text>
+              <text x="280" y="220" class="axis-label" text-anchor="middle">May</text>
+              <text x="330" y="220" class="axis-label" text-anchor="middle">Jun</text>
+              <text x="380" y="220" class="axis-label" text-anchor="middle">Jul</text>
+              <text x="430" y="220" class="axis-label" text-anchor="middle">Aug</text>
+              
+              <!-- Y-axis labels -->
+              <text x="40" y="200" class="axis-label" text-anchor="end">$0</text>
+              <text x="40" y="160" class="axis-label" text-anchor="end">$75K</text>
+              <text x="40" y="120" class="axis-label" text-anchor="end">$150K</text>
+              <text x="40" y="80" class="axis-label" text-anchor="end">$225K</text>
+              <text x="40" y="40" class="axis-label" text-anchor="end">$300K</text>
+              
+              <!-- Grid lines -->
+              <line x1="50" y1="160" x2="450" y2="160" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />
+              <line x1="50" y1="120" x2="450" y2="120" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />
+              <line x1="50" y1="80" x2="450" y2="80" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />
+              <line x1="50" y1="40" x2="450" y2="40" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />
+              
+              <!-- Area chart -->
+              <path d="M80,196.7 L130,191.7 L180,185 L230,173.3 L280,156.7 L330,136.7 L380,110 L430,75 L430,200 L80,200 Z" 
+                    fill="#4f46e5" class="chart-area" />
+              
+              <!-- Line for the top of the area -->
+              <path d="M80,196.7 L130,191.7 L180,185 L230,173.3 L280,156.7 L330,136.7 L380,110 L430,75" 
+                    class="chart-line" stroke="#4f46e5" stroke-width="2.5" />
+              
+              <!-- Data points -->
+              <circle cx="80" cy="196.7" r="4" fill="#4f46e5" />
+              <circle cx="130" cy="191.7" r="4" fill="#4f46e5" />
+              <circle cx="180" cy="185" r="4" fill="#4f46e5" />
+              <circle cx="230" cy="173.3" r="4" fill="#4f46e5" />
+              <circle cx="280" cy="156.7" r="4" fill="#4f46e5" />
+              <circle cx="330" cy="136.7" r="4" fill="#4f46e5" />
+              <circle cx="380" cy="110" r="4" fill="#4f46e5" />
+              <circle cx="430" cy="75" r="4" fill="#4f46e5" />
+              
+              <!-- Value labels -->
+              <text x="80" y="186.7" class="chart-label" text-anchor="middle">$10K</text>
+              <text x="430" cy="65" class="chart-label" text-anchor="middle">$250K</text>
+              
+              <!-- Chart title -->
+              <text x="40" y="25" class="chart-title" text-anchor="start">Cumulative Value ($)</text>
+            </svg>
           </div>
           <p class="mt-4 text-sm text-gray-500">
             The compounding value of GEO-powered research creates significant advantages over time.
@@ -351,11 +586,213 @@
           messageDiv.className = 'mt-3 rounded-md p-4 bg-red-50';
           messageText.className = 'text-sm font-medium text-red-800';
           messageIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>';
+        }mt-3 rounded-md p-4 bg-red-50';
+          messageText.className = 'text-sm font-medium text-red-800';
+          messageIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>';
         }
         
         // Show the message
         messageDiv.classList.remove('hidden');
       }
+    });
+  </script>mt-3 rounded-md p-4 bg-green-50';
+          messageText.className = 'text-sm font-medium text-green-800';
+          messageIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>';
+        } else {
+          messageDiv.className = 'mt-3 rounded-md p-4 bg-red-50';
+          messageText.className = 'text-sm font-medium text-red-800';
+          messageIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>';
+        }
+        
+        // Show the message
+        messageDiv.classList.remove('hidden');
+      }
+
+      // Create charts using Chart.js
+      
+      // Research Efficiency Chart
+      const efficiencyCtx = document.getElementById('efficiency-chart').getContext('2d');
+      const efficiencyChart = new Chart(efficiencyCtx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+          datasets: [
+            {
+              label: 'Traditional Methods',
+              data: [30, 32, 28, 33, 35, 34, 36, 37],
+              borderColor: '#8884d8',
+              backgroundColor: 'rgba(136, 132, 216, 0.1)',
+              tension: 0.4
+            },
+            {
+              label: 'GEO Platform',
+              data: [45, 52, 58, 70, 85, 90, 95, 100],
+              borderColor: '#4f46e5',
+              backgroundColor: 'rgba(79, 70, 229, 0.1)',
+              borderWidth: 2,
+              tension: 0.4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+            }
+          },
+          scales: {
+            y: {
+              title: {
+                display: true,
+                text: 'Efficiency Score'
+              },
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      // Insight Quality Metrics Chart
+      const qualityCtx = document.getElementById('quality-chart').getContext('2d');
+      const qualityChart = new Chart(qualityCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Relevance', 'Accuracy', 'Depth', 'Actionability', 'Innovation'],
+          datasets: [
+            {
+              label: 'Traditional Methods',
+              data: [65, 70, 60, 55, 40],
+              backgroundColor: '#8884d8',
+            },
+            {
+              label: 'GEO Platform',
+              data: [92, 95, 88, 90, 85],
+              backgroundColor: '#4f46e5',
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          plugins: {
+            legend: {
+              position: 'top',
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 100,
+              title: {
+                display: true,
+                text: 'Score'
+              }
+            }
+          }
+        }
+      });
+
+      // Time to Insight Chart
+      const timeCtx = document.getElementById('time-chart').getContext('2d');
+      const timeChart = new Chart(timeCtx, {
+        type: 'pie',
+        data: {
+          labels: ['Traditional', 'GEO'],
+          datasets: [{
+            data: [120, 45],
+            backgroundColor: ['#8884d8', '#4f46e5'],
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  label += context.raw + ' minutes';
+                  return label;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // Cumulative Research Value Chart
+      const valueCtx = document.getElementById('value-chart').getContext('2d');
+      const valueChart = new Chart(valueCtx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+          datasets: [{
+            label: 'Cumulative Value',
+            data: [10000, 25000, 45000, 70000, 100000, 140000, 190000, 250000],
+            fill: true,
+            borderColor: '#4f46e5',
+            backgroundColor: 'rgba(79, 70, 229, 0.2)',
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  label += '
+    });
+  </script>
+</body>
+</html> + context.raw.toLocaleString();
+                  return label;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Value ($)'
+              },
+              ticks: {
+                callback: function(value) {
+                  return '
+    });
+  </script>
+</body>
+</html> + value.toLocaleString();
+                }
+              }
+            }
+          }
+        }
+      });
     });
   </script>
 </body>
